@@ -1,0 +1,30 @@
+Private Sub CommandButton1_Click()
+'Export Pdf
+Sheet1.Range("A1:K49").ExportAsFixedFormat xlTypePDF, Filename:= _
+"C:\bills\" & Sheet1.Range("H9").Value, openafterpublish:=True
+
+'Add To Sales Report
+If Sheet4.Range("A2") <> "" Then
+Sheet4.Rows(2).Insert shift:=xlShiftDown
+Sheet4.Range("A2").Value = Sheet1.Range("C9").Value
+Sheet4.Range("B2").Value = Sheet1.Range("H9").Value
+Sheet4.Range("C2").Value = Sheet1.Range("H10").Value
+Sheet4.Range("D2").Value = Sheet1.Range("J45").Value
+Sheet4.Rows(2).Font.Bold = False
+End If
+If Sheet4.Range("A2") = "" Then
+Sheet4.Range("A2").Value = Sheet1.Range("C9").Value
+Sheet4.Range("B2").Value = Sheet1.Range("H9").Value
+Sheet4.Range("C2").Value = Sheet1.Range("H10").Value
+Sheet4.Range("D2").Value = Sheet1.Range("J45").Value
+End If
+
+'Clear Datas
+Sheet1.Range("C9").Value = ""
+'Product
+Sheet1.Range("B13:B41").Value = ""
+'Quantity
+Sheet1.Range("F13:F41").Value = ""
+'New Invoice
+Sheet1.Range("H9").Value = Sheet1.Range("H9").Value + 1
+End Sub
