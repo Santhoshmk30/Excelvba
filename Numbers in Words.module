@@ -1,0 +1,86 @@
+Function Rupee(amt As Variant) As Variant
+Dim num As Variant
+Dim LENFIG As Integer
+Dim i As Integer
+Dim wrds(19) As String
+Dim tens(9) As String
+wrds(1) = "One "
+wrds(2) = "Two "
+wrds(3) = "Three "
+wrds(4) = "Four "
+wrds(5) = "Five "
+wrds(6) = "Six "
+wrds(7) = "Seven "
+wrds(8) = "Eight "
+wrds(9) = "Nine "
+wrds(10) = "Ten "
+wrds(11) = "Eleven "
+wrds(12) = "Twelve "
+wrds(13) = "Thirteen "
+wrds(14) = "Fourteen "
+wrds(15) = "Fifteen "
+wrds(16) = "Sixteen "
+wrds(17) = "Seventeen "
+wrds(18) = "Eighteen "
+wrds(19) = "Nineteen "
+tens(2) = "Twenty "
+tens(3) = "Thirty "
+tens(4) = "Fourty "
+tens(5) = "Fifty "
+tens(6) = "Sixty "
+tens(7) = "Seventy "
+tens(8) = "Eighty "
+tens(9) = "Ninety "
+num = amt
+num = Format(num, "FIXED")
+numlen = Len(num)
+If numlen < 12 Then
+num = Space(12 - numlen) & num
+End If
+If Val(Left(num, 9)) > 1 Then
+Rupee = "Rupees "
+ElseIf Val(Left(num, 9)) = 1 Then
+Rupee = "Rupee "
+End If
+For i = 1 To 3
+If Val(Left(num, 2)) < 20 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & wrds(Val(Left(num, 2)))
+ElseIf Val(Left(num, 2)) > 19 Then
+Rupee = Rupee & tens(Val(Left(num, 1)))
+Rupee = Rupee & wrds(Val(Right(Left(num, 2), 1)))
+End If
+If i = 1 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & " Crore "
+ElseIf i = 2 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & " Lakh "
+ElseIf i = 3 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & " Thousand "
+End If
+num = Mid(num, 3)
+Next i
+If Val(Left(num, 1)) > 0 Then
+Rupee = Rupee & wrds(Val(Left(num, 1))) + " Hundred "
+End If
+num = Mid(num, 2)
+If Val(Left(num, 2)) < 20 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & wrds(Val(Left(num, 2)))
+ElseIf Val(Left(num, 2)) > 19 Then
+Rupee = Rupee & tens(Val(Left(num, 1)))
+Rupee = Rupee & wrds(Val(Right(Left(num, 2), 1)))
+End If
+num = Mid(num, 4)
+If Val(num) > 0 Then
+Rupee = Rupee & " Paise "
+If Val(Left(num, 2)) < 20 And Val(Left(num, 2)) > 0 Then
+Rupee = Rupee & wrds(Val(Left(num, 2)))
+ElseIf Val(Left(num, 2)) > 19 Then
+Rupee = Rupee & tens(Val(Left(num, 1)))
+Rupee = Rupee & wrds(Val(Right(Left(num, 2), 1)))
+End If
+End If
+num = amt
+num = Format(num, "FIXED")
+If Val(num) > 0 Then
+Rupee = Rupee & " Only "
+End If
+End Function
